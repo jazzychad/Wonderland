@@ -12,6 +12,10 @@ public struct MirrorNavRoot: View {
 
     public let subject: Any
 
+    public init(subject: Any) {
+        self.subject = subject
+    }
+
     public var body: some View {
         NavigationView {
             MirrorView(subject: subject)
