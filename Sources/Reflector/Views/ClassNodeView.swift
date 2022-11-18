@@ -17,7 +17,16 @@ struct ClassNodeView: View {
 
             PillLabel(label: "class", bgColor: .red)
 
+            if let typeString = node.wrapperTypeString {
+                Text("@\(typeString)")
+                    .font(.system(.callout))
+                    .fontWeight(.semibold)
+                    .foregroundColor(.red)
+            }
             HStack {
+                if let typeString = node.wrapperTypeString {
+                    Text("@\(typeString)")
+                }
                 Text("\(node.label ?? "<<none>>")")
                     .fontWeight(.bold)
                 Text(":")

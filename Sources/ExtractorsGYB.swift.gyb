@@ -1,0 +1,59 @@
+
+import Foundation
+import Combine
+import SwiftUI
+
+// MARK: - ReflectionValueExtractor
+
+public protocol ReflectionValueExtractor {
+    func extractValue() -> Any
+    func wrapperTypeString() -> String
+}
+
+%{
+    extractor_types = [
+        ('Published', ''),
+        ('State', ''),
+        ('Binding', ''),
+        ('AppStorage', ''),
+        ('ObservedObject', 'ObservableObject'),
+        ('EnvironmentObject', 'ObservableObject'),
+        ('StateObject', 'ObservableObject'),
+    ]
+}%
+
+% for tup in extractor_types:
+%{
+TypeName = tup[0]
+ExtraProtocol = tup[1]
+}%
+
+// MARK: - ${TypeName}
+
+public protocol ${TypeName}Reflection: ReflectionValueExtractor {}
+extension ${TypeName}: ${TypeName}Reflection {
+    public func extractValue() -> Any {
+        return ${TypeName}Extractor.extractValue(self)
+    }
+
+    public func wrapperTypeString() -> String {
+        return "${TypeName}"
+    }
+}
+
+final class ${TypeName}Extractor<T${': ' + ExtraProtocol if len(ExtraProtocol) > 0 else ''}> {
+    @${TypeName} var value: T
+
+    static func extractValue(_ wrapper: ${TypeName}<T>) -> T {
+        return Self(wrapper).value
+    }
+
+    init(_ wrapper: ${TypeName}<T>) {
+        _value = wrapper
+    }
+}
+
+% end
+
+
+

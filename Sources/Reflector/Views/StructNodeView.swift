@@ -15,13 +15,25 @@ struct StructNodeView: View {
     var body: some View {
         VStack(alignment: .leading) {
 
-            PillLabel(label: "struct", bgColor: .green)
-
             HStack {
+                PillLabel(label: "struct", bgColor: .green)
+                if node.isUnwrappedOptional {
+                    PillLabel(label: "optional", bgColor: Color(uiColor: .lightGray))
+                }
+            }
+
+            if let typeString = node.wrapperTypeString {
+                Text("@\(typeString)")
+                    .font(.system(.callout))
+                    .fontWeight(.semibold)
+                    .foregroundColor(.red)
+            }
+            HStack {
+
                 Text("\(node.label ?? "<<none>>")")
                     .fontWeight(.bold)
                 Text(":")
-                Text("\(String(describing: node.valueMirror.subjectType))")
+                Text("\(String(describing: node.valueMirror.subjectType))\(node.isUnwrappedOptional ? "?" : "")")
                 Spacer()
             }
 

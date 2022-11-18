@@ -12,12 +12,22 @@ struct PrimitiveNodeView: View {
     let node: MirrorNodeViewModel
 
     var body: some View {
-        HStack {
-            Text("\(node.label ?? "<<none>>")")
-                .fontWeight(.bold)
-            Text(":")
-            Text("\(String(describing: node.valueMirror.subjectType)) = \(String(describing: node.value))")
-            Spacer()
+        VStack(alignment: .leading) {
+            if let typeString = node.wrapperTypeString {
+                Text("@\(typeString)")
+                    .font(.system(.callout))
+                    .fontWeight(.semibold)
+                    .foregroundColor(.red)
+
+            }
+
+            HStack {
+                Text("\(node.label ?? "<<none>>")")
+                    .fontWeight(.bold)
+                Text(":")
+                Text("\(String(describing: node.valueMirror.subjectType)) = \(String(describing: node.value))")
+                Spacer()
+            }
         }
     }
 }

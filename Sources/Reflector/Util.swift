@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 extension String {
     subscript(_ range: CountableRange<Int>) -> String {
         let start = index(startIndex, offsetBy: max(0, range.lowerBound))
@@ -21,6 +22,7 @@ extension String {
     }
 }
 
+// MARK: -
 
 protocol OptionalProtocol {
     func isSome() -> Bool
@@ -69,3 +71,6 @@ func unwrapUsingProtocol<T>(_ any: T) -> Any
     }
     return optional.unwrap()
 }
+
+// MARK: -
+

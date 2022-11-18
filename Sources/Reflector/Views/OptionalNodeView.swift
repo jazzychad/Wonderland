@@ -13,10 +13,18 @@ struct OptionalNodeView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            let _ = print((node.value as Optional<Any>).customMirror)
-            let _ = print("asdfasdfasdfasdf")
+//            let _ = print((node.value as Optional<Any>).customMirror)
+//            let _ = print("asdfasdfasdfasdf")
 
             PillLabel(label: "optional", bgColor: Color(uiColor: .lightGray))
+
+            if let typeString = node.wrapperTypeString {
+                Text("@\(typeString)")
+                    .font(.system(.callout))
+                    .fontWeight(.semibold)
+                    .foregroundColor(.red)
+
+            }
 
             HStack {
                 Text("\(node.label ?? "<<none>>")")

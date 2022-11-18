@@ -17,6 +17,13 @@ struct EnumNodeView: View {
 
             PillLabel(label: "enum", bgColor: .indigo)
 
+            if let typeString = node.wrapperTypeString {
+                Text("@\(typeString)")
+                    .font(.system(.callout))
+                    .fontWeight(.semibold)
+                    .foregroundColor(.red)
+            }
+
             HStack {
                 Text("\(node.label ?? "<<none>>")")
                     .fontWeight(.bold)
