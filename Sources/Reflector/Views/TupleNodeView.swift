@@ -16,26 +16,39 @@ struct TupleNodeView: View {
         self.node = node
         self.children = self.node.valueMirror.children.map { MirrorNodeViewModel(label: $0.label, value: $0.value) }
         print("init'd")
+        print(self.children)
     }
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack {
             let _ = print("vvv")
             ForEach(children) { child in
-                let _ = print(child.value)
-                let _ = print(child.valueMirror.displayStyle)
-                if child.valueMirror.displayStyle == nil {
-                    //TupleChildNodeView(node: MirrorNodeViewModel(label: child.label, value: child.value))
-                    //TupleChildNodeView(node: child)
+                HStack { // WHY IS THIS REQUIRED TO MAKE THE APP NOT LOCK UP!?!?!?!??!
+                    let _ = print(child.value)
+                    let _ = print(child.valueMirror.displayStyle)
+
+                    if child.valueMirror.displayStyle == nil {
+                        //TupleChildNodeView(node: MirrorNodeViewModel(label: child.label, value: child.value))
+                        //TupleChildNodeView(node: child)
+                        NodeView(node: child)
+                        //PrimitiveNodeView(node: child)
+
+                        //Text("nil")
+                    } else {
+                        //                    if child.valueMirror.displayStyle == .`struct` {
+                        //                        StructNodeView(node: child)
+                        //                    } else {
+                        //                        let _ = print(String(describing:child.valueMirror.displayStyle))
+                        //                        Text("soemthing else:")
+                        //                    }
+                        NodeView(node: child)
+                        //Text("other2")
+                    }
                     //NodeView(node: child)
-                    Text("nil")
-                } else {
-                    Text("soemthing")
+                    //                Text(child.label ?? "<<no label>>")
+                    //                Text("val: \(String(describing: child.value))")
+                    //                Divider()
                 }
-                //NodeView(node: child)
-//                Text(child.label ?? "<<no label>>")
-//                Text("val: \(String(describing: child.value))")
-//                Divider()
             }
             let _ = print("^^^")
         }

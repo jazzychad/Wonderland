@@ -42,8 +42,7 @@ public struct MirrorView: View {
     public var body: some View {
         List {
             ForEach(children) { child in
-                HStack {
-
+                HStack { // WHY IS THIS NEEDED TO NOT LOCK THE APP?!?!?!?
 //                    if let style = child.valueMirror.displayStyle {
 //                        switch style {
 //                        case .`struct`:

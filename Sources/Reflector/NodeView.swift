@@ -73,3 +73,76 @@ struct NodeView: View {
         }
     }
 }
+
+// MARK: -
+
+struct SimpleNodeView: View {
+
+    let node: MirrorNodeViewModel
+
+    init(node: MirrorNodeViewModel) {
+        self.node = node
+        print("init'd SimpleNodeView")
+    }
+
+    var body: some View {
+        let _ = print("in SimpleNodeView body")
+
+        if let extracted = node.extractedNode {
+            let _ = print("found extracted node")
+            SimpleNodeView(node: extracted)
+            //Text("WAT")
+        } else
+        if let style = node.valueMirror.displayStyle {
+            let _ = print("found style:")
+            let _ = print(style)
+            switch style {
+
+            case .`struct`:
+
+                    StructNodeView(node: node)
+
+
+            case .`class`:
+
+                    ClassNodeView(node: node)
+
+            case .`enum`:
+                EnumNodeView(node: node)
+            case .tuple:
+                //                Text("tuple")
+                //                NavigationLink {
+                //                    MirrorView(subject: node.value)
+                //                } label: {
+                TupleNodeView(node: node)
+                //                }
+            case .optional:
+//                Text("optional")
+                if let v = node.value as? OptionalProtocol, v.isSome() {
+                    SimpleNodeView(node: MirrorNodeViewModel(label: node.label, value: v.unwrap(), isUnwrappedOptional: true))
+                    //Text("optional")
+                } else {
+                    OptionalNodeView(node: node)
+//                    Text("nil")
+                }
+            case .collection:
+
+                    CollectionNodeView(node: node)
+
+            case .set:
+
+                    CollectionNodeView(node: node)
+
+            case .dictionary:
+
+                    CollectionNodeView(node: node)
+
+            default:
+                Text("other other other")
+            }
+        } else {
+            PrimitiveNodeView(node: node)
+        }
+    }
+}
+
