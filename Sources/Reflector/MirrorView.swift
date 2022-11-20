@@ -71,7 +71,7 @@ public struct MirrorView: View {
 //                    } else {
 //                        PrimitiveNodeView(node: child)
 //                    }
-                    NodeViewBuilder(node: child)
+                    NodeView(node: child)
                 }
             }
         }

@@ -29,32 +29,12 @@ struct MirrorNodeViewModel: Identifiable {
         self.wrapperTypeString = wrapperTypeString
 
         if let extractor = value as? ReflectionValueExtractor {
-            let extraction = extractor.extractValue()
+            let extraction = extractor.extractWrappedValue()
             self.extracted = [
                 MirrorNodeViewModel(label: String(label?[1...] ?? ""), value: extraction, wrapperTypeString: extractor.wrapperTypeString())
             ]
         } else {
             self.extracted = []
         }
-
-//        if valueMirror.displayStyle == .optional {
-//
-//            if let optVal = self.value as? OptionalProtocol {
-//
-//                if optVal.isSome() {
-//                    let v = optVal.unwrap()
-//                    let t = optVal.wrappedType()
-//                    let mir = Mirror(reflecting: v)
-//                    print("VVVVVVVVVVVV")
-//                    print(mir)
-//                    print(mir.subjectType)
-//                    print("wrapped type: \(String(describing: t))")
-//                    print("~~~~~~~")
-//                }
-//            }
-//
-//        } else {
-//            // ??
-//        }
     }
 }

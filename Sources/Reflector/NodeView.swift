@@ -1,5 +1,5 @@
 //
-//  ViewUtil.swift
+//  NodeView.swift
 //  
 //
 //  Created by Chad Etzel on 11/17/22.
@@ -8,13 +8,14 @@
 import Foundation
 import SwiftUI
 
-struct NodeViewBuilder: View {
+struct NodeView: View {
 
     let node: MirrorNodeViewModel
 
     var body: some View {
+        let _ = print("in NodeView body")
         if let extracted = node.extractedNode {
-            NodeViewBuilder(node: extracted)
+            NodeView(node: extracted)
         } else
         if let style = node.valueMirror.displayStyle {
             switch style {
@@ -34,12 +35,35 @@ struct NodeViewBuilder: View {
             case .`enum`:
                 EnumNodeView(node: node)
             case .tuple:
-                Text("tuple")
+//                Text("tuple")
+//                NavigationLink {
+//                    MirrorView(subject: node.value)
+//                } label: {
+                    TupleNodeView(node: node)
+//                }
             case .optional:
                 if let v = node.value as? OptionalProtocol, v.isSome() {
-                    NodeViewBuilder(node: MirrorNodeViewModel(label: node.label, value: v.unwrap(), isUnwrappedOptional: true))
+                    NodeView(node: MirrorNodeViewModel(label: node.label, value: v.unwrap(), isUnwrappedOptional: true))
                 } else {
                     OptionalNodeView(node: node)
+                }
+            case .collection:
+                NavigationLink {
+                    MirrorView(subject: node.value)
+                } label: {
+                    CollectionNodeView(node: node)
+                }
+            case .set:
+                NavigationLink {
+                    MirrorView(subject: node.value)
+                } label: {
+                    CollectionNodeView(node: node)
+                }
+            case .dictionary:
+                NavigationLink {
+                    MirrorView(subject: node.value)
+                } label: {
+                    CollectionNodeView(node: node)
                 }
             default:
                 Text("other")

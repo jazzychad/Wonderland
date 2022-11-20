@@ -22,6 +22,18 @@ extension String {
     }
 }
 
+func extractGenericType(_ typestring: String) -> String? {
+    let idx0 = typestring.firstIndex(of: "<")
+    let idx2 = typestring.firstIndex(of: ">")
+    if let idx0 = idx0,
+       let idx2 = idx2 {
+        let idx1 = typestring.index(idx0, offsetBy: 1)
+        return String(typestring[idx1..<idx2])
+    }
+    return nil
+
+}
+
 // MARK: -
 
 protocol OptionalProtocol {
@@ -71,6 +83,3 @@ func unwrapUsingProtocol<T>(_ any: T) -> Any
     }
     return optional.unwrap()
 }
-
-// MARK: -
-
