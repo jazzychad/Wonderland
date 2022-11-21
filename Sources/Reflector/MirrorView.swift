@@ -42,36 +42,7 @@ public struct MirrorView: View {
     public var body: some View {
         List {
             ForEach(children) { child in
-                HStack { // WHY IS THIS NEEDED TO NOT LOCK THE APP?!?!?!?
-//                    if let style = child.valueMirror.displayStyle {
-//                        switch style {
-//                        case .`struct`:
-//                            NavigationLink {
-//                                MirrorView(subject: child.value)
-//                            } label: {
-//                                StructNodeView(node: child)
-//                            }
-//
-//                        case .`class`:
-//                            NavigationLink {
-//                                MirrorView(subject: child.value)
-//                            } label: {
-//                                ClassNodeView(node: child)
-//                            }
-//                        case .`enum`:
-//                            EnumNodeView(node: child)
-//                        case .tuple:
-//                            Text("tuple")
-//                        case .optional:
-//                            OptionalNodeView(node: child)
-//                        default:
-//                            Text("other")
-//                        }
-//                    } else {
-//                        PrimitiveNodeView(node: child)
-//                    }
-                    NodeView(node: child)
-                }
+                NodeView(node: child)
             }
         }
         .navigationTitle(String(describing: mirror.subjectType))

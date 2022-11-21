@@ -13,9 +13,10 @@ struct NodeView: View {
     let node: MirrorNodeViewModel
 
     var body: some View {
-        let _ = print("in NodeView body")
         if let extracted = node.extractedNode {
-            NodeView(node: extracted)
+            ZStack { // SwiftUI doesn't like recursively placing views inside itself, need to wrap in something like a ZStack
+                NodeView(node: extracted)
+            }
         } else
         if let style = node.valueMirror.displayStyle {
             switch style {
@@ -33,17 +34,18 @@ struct NodeView: View {
                     ClassNodeView(node: node)
                 }
             case .`enum`:
-                EnumNodeView(node: node)
+                NavigationLink {
+                    PrimitiveView(node: node)
+                } label: {
+                    EnumNodeView(node: node)
+                }
             case .tuple:
-//                Text("tuple")
-//                NavigationLink {
-//                    MirrorView(subject: node.value)
-//                } label: {
                     TupleNodeView(node: node)
-//                }
             case .optional:
                 if let v = node.value as? OptionalProtocol, v.isSome() {
-                    NodeView(node: MirrorNodeViewModel(label: node.label, value: v.unwrap(), isUnwrappedOptional: true))
+                    ZStack { // SwiftUI doesn't like recursively placing views inside itself, need to wrap in something like a ZStack
+                        NodeView(node: MirrorNodeViewModel(label: node.label, value: v.unwrap(), isUnwrappedOptional: true))
+                    }
                 } else {
                     OptionalNodeView(node: node)
                 }
@@ -69,80 +71,79 @@ struct NodeView: View {
                 Text("other")
             }
         } else {
-            PrimitiveNodeView(node: node)
+            NavigationLink {
+                PrimitiveView(node: node)
+            } label: {
+                PrimitiveNodeView(node: node)
+            }
         }
     }
 }
 
 // MARK: -
 
-struct SimpleNodeView: View {
-
-    let node: MirrorNodeViewModel
-
-    init(node: MirrorNodeViewModel) {
-        self.node = node
-        print("init'd SimpleNodeView")
-    }
-
-    var body: some View {
-        let _ = print("in SimpleNodeView body")
-
-        if let extracted = node.extractedNode {
-            let _ = print("found extracted node")
-            SimpleNodeView(node: extracted)
-            //Text("WAT")
-        } else
-        if let style = node.valueMirror.displayStyle {
-            let _ = print("found style:")
-            let _ = print(style)
-            switch style {
-
-            case .`struct`:
-
-                    StructNodeView(node: node)
-
-
-            case .`class`:
-
-                    ClassNodeView(node: node)
-
-            case .`enum`:
-                EnumNodeView(node: node)
-            case .tuple:
-                //                Text("tuple")
-                //                NavigationLink {
-                //                    MirrorView(subject: node.value)
-                //                } label: {
-                TupleNodeView(node: node)
-                //                }
-            case .optional:
-//                Text("optional")
-                if let v = node.value as? OptionalProtocol, v.isSome() {
-                    SimpleNodeView(node: MirrorNodeViewModel(label: node.label, value: v.unwrap(), isUnwrappedOptional: true))
-                    //Text("optional")
-                } else {
-                    OptionalNodeView(node: node)
-//                    Text("nil")
-                }
-            case .collection:
-
-                    CollectionNodeView(node: node)
-
-            case .set:
-
-                    CollectionNodeView(node: node)
-
-            case .dictionary:
-
-                    CollectionNodeView(node: node)
-
-            default:
-                Text("other other other")
-            }
-        } else {
-            PrimitiveNodeView(node: node)
-        }
-    }
-}
+//struct SimpleNodeView: View {
+//
+//    let node: MirrorNodeViewModel
+//
+//    init(node: MirrorNodeViewModel) {
+//        self.node = node
+//        print("init'd SimpleNodeView")
+//    }
+//
+//    var body: some View {
+//        let _ = print("in SimpleNodeView body")
+//
+//        if let extracted = node.extractedNode {
+//            let _ = print("found extracted node")
+//            ZStack { // SwiftUI doesn't like recursively placing views inside itself, need to wrap in something like a ZStack
+//                SimpleNodeView(node: extracted)
+//            }
+//        } else
+//        if let style = node.valueMirror.displayStyle {
+//            let _ = print("found style:")
+//            let _ = print(style)
+//            switch style {
+//
+//            case .`struct`:
+//
+//                    StructNodeView(node: node)
+//
+//
+//            case .`class`:
+//
+//                    ClassNodeView(node: node)
+//
+//            case .`enum`:
+//                EnumNodeView(node: node)
+//            case .tuple:
+//                TupleNodeView(node: node)
+//            case .optional:
+//                if let v = node.value as? OptionalProtocol, v.isSome() {
+//                    ZStack { // SwiftUI doesn't like recursively placing views inside itself, need to wrap in something like a ZStack
+//                        SimpleNodeView(node: MirrorNodeViewModel(label: node.label, value: v.unwrap(), isUnwrappedOptional: true))
+//                    }
+//                } else {
+//                    OptionalNodeView(node: node)
+//                }
+//            case .collection:
+//
+//                    CollectionNodeView(node: node)
+//
+//            case .set:
+//
+//                    CollectionNodeView(node: node)
+//
+//            case .dictionary:
+//
+//                    CollectionNodeView(node: node)
+//
+//            default:
+//                Text("other other other")
+//            }
+//        } else {
+//            PrimitiveNodeView(node: node)
+//        }
+//    }
+//}
 

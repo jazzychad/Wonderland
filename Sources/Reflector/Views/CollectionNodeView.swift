@@ -14,27 +14,30 @@ struct CollectionNodeView: View {
     var body: some View {
         VStack(alignment: .leading) {
 
-            HStack {
-                PillLabel(label: "collection", bgColor: .pink)
-                if node.isUnwrappedOptional {
-                    PillLabel(label: "optional", bgColor: Color(uiColor: .lightGray))
-                }
-            }
+//            HStack {
+//                PillLabel(label: "collection", bgColor: .pink)
+//                if node.isUnwrappedOptional {
+//                    PillLabel(label: "optional", bgColor: Color(uiColor: .lightGray))
+//                }
+//            }
+            TagsView(label: "collection", bgColor: .pink, isUnwrappedOptional: node.isUnwrappedOptional)
 
-            if let typeString = node.wrapperTypeString {
-                Text("@\(typeString)")
-                    .font(.system(.callout))
-                    .fontWeight(.semibold)
-                    .foregroundColor(.red)
-            }
-            HStack {
-
-                Text("\(node.label ?? "<<none>>")")
-                    .fontWeight(.bold)
-                Text(":")
-                Text("\(String(describing: node.valueMirror.subjectType))\(node.isUnwrappedOptional ? "?" : "")")
-                Spacer()
-            }
+//            if let typeString = node.wrapperTypeString {
+//                Text("@\(typeString)")
+//                    .font(.system(.callout))
+//                    .fontWeight(.semibold)
+//                    .foregroundColor(.red)
+//            }
+            PropertyWrapperLabel(node: node)
+//            HStack {
+//
+//                Text("\(node.label ?? "<<none>>")")
+//                    .fontWeight(.bold)
+//                Text(":")
+//                Text("\(String(describing: node.valueMirror.subjectType))\(node.isUnwrappedOptional ? "?" : "")")
+//                Spacer()
+//            }
+            LabelTypeView(node: node)
 
         }
     }
