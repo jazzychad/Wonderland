@@ -31,11 +31,20 @@ public struct MirrorView: View {
 
     let subject: Any
     let mirror: Mirror
+    let node: MirrorNodeViewModel
     let children: [MirrorNodeViewModel]
 
     public init(subject: Any) {
         self.subject = subject
         self.mirror = Mirror(reflecting: subject)
+        self.node = MirrorNodeViewModel(label: nil, value: subject)
+        self.children = self.mirror.children.map { MirrorNodeViewModel(label: $0.label, value: $0.value) }
+    }
+
+    internal init(node: MirrorNodeViewModel) {
+        self.node = node
+        self.subject = node.value
+        self.mirror = node.valueMirror
         self.children = self.mirror.children.map { MirrorNodeViewModel(label: $0.label, value: $0.value) }
     }
 
@@ -45,7 +54,7 @@ public struct MirrorView: View {
                 NodeView(node: child)
             }
         }
-        .navigationTitle(String(describing: mirror.subjectType))
+        .navigationTitle(node.subjectTypeString)
     }
 
 

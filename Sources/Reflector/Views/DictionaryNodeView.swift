@@ -1,20 +1,20 @@
 //
-//  CollectionNodeView.swift
-//  
+//  DictionaryNodeView.swift
+//
 //
 //  Created by Chad Etzel on 11/19/22.
 //
 
 import SwiftUI
 
-struct CollectionNodeView: View {
+struct DictionaryNodeView: View {
 
     let node: MirrorNodeViewModel
 
     var body: some View {
         VStack(alignment: .leading) {
 
-            TagsView(label: "collection", bgColor: .pink, isUnwrappedOptional: node.isUnwrappedOptional)
+            TagsView(label: "dictionary", bgColor: .pink, isUnwrappedOptional: node.isUnwrappedOptional)
 
             PropertyWrapperLabel(node: node)
 

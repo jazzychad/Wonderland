@@ -16,7 +16,8 @@ struct LabelTypeView: View {
             Text("\(node.label ?? "<<none>>")")
                 .fontWeight(.bold)
             Text(":")
-            Text("\(String(describing: node.valueMirror.subjectType))\(node.isUnwrappedOptional ? "?" : "")")
+//            Text("\(node.subjectTypeString)\(node.isUnwrappedOptional ? "?" : "")")
+            Text(node.subjectTypeString)
             Spacer()
         }
     }

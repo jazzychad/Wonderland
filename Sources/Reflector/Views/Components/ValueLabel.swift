@@ -28,7 +28,7 @@ struct ValueLabel: View {
 
     var body: some View {
         Text(displayString)
-            .font(.system(.body, design: .monospaced))
+            .font(.system(.caption, design: .monospaced))
             .padding(2)
             .foregroundColor(.black)
             .lineLimit(nil)

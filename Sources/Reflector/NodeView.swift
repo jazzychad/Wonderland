@@ -26,7 +26,6 @@ struct NodeView: View {
                 } label: {
                     StructNodeView(node: node)
                 }
-
             case .`class`:
                 NavigationLink {
                     MirrorView(subject: node.value)
@@ -40,11 +39,12 @@ struct NodeView: View {
                     EnumNodeView(node: node)
                 }
             case .tuple:
-                    TupleNodeView(node: node)
+                // each of the members (children) in the Tuple will be able to NavigationLink themselves if needed
+                TupleNodeView(node: node)
             case .optional:
                 if let v = node.value as? OptionalProtocol, v.isSome() {
                     ZStack { // SwiftUI doesn't like recursively placing views inside itself, need to wrap in something like a ZStack
-                        NodeView(node: MirrorNodeViewModel(label: node.label, value: v.unwrap(), isUnwrappedOptional: true))
+                        NodeView(node: MirrorNodeViewModel(label: node.label, value: v.unwrap(), isUnwrappedOptional: true, wrapperTypeString: node.wrapperTypeString))
                     }
                 } else {
                     OptionalNodeView(node: node)
@@ -59,13 +59,13 @@ struct NodeView: View {
                 NavigationLink {
                     MirrorView(subject: node.value)
                 } label: {
-                    CollectionNodeView(node: node)
+                    SetNodeView(node: node)
                 }
             case .dictionary:
                 NavigationLink {
-                    MirrorView(subject: node.value)
+                    MirrorView(node: node)
                 } label: {
-                    CollectionNodeView(node: node)
+                    DictionaryNodeView(node: node)
                 }
             default:
                 Text("other")
