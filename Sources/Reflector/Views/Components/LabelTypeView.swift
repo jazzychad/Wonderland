@@ -18,6 +18,7 @@ struct LabelTypeView: View {
             Text(":")
 //            Text("\(node.subjectTypeString)\(node.isUnwrappedOptional ? "?" : "")")
             Text(node.subjectTypeString)
+                .font(.system(.body, design: .monospaced))
             Spacer()
         }
     }

@@ -35,6 +35,7 @@ struct OptionalNodeView: View {
                     Text("\(optionalType(String(describing: node.valueMirror.subjectType))) = \(String(describing: v.unwrap()))")
                 } else {
                     Text("\(optionalType(String(describing: node.valueMirror.subjectType))) = nil")
+                        .font(.system(.body, design: .monospaced))
                 }
 
                 Spacer()
