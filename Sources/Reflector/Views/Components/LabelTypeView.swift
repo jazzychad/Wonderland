@@ -15,10 +15,12 @@ struct LabelTypeView: View {
         HStack {
             Text("\(node.label ?? "<<none>>")")
                 .fontWeight(.bold)
+                .font(.system(.body))
             Text(":")
+                .font(.system(.caption))
 //            Text("\(node.subjectTypeString)\(node.isUnwrappedOptional ? "?" : "")")
             Text(node.subjectTypeString)
-                .font(.system(.body, design: .monospaced))
+                .font(.system(.caption, design: .monospaced))
             Spacer()
         }
     }

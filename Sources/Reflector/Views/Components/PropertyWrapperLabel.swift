@@ -14,7 +14,7 @@ struct PropertyWrapperLabel: View {
     var body: some View {
         if let typeString = node.wrapperTypeString {
             Text("@\(typeString)")
-                .font(.system(.callout, design: .monospaced))
+                .font(.system(.caption, design: .monospaced))
                 .fontWeight(.semibold)
                 .foregroundColor(.red)
         } else {
