@@ -13,18 +13,8 @@ struct OptionalNodeView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-//            HStack {
-//                PillLabel(label: "optional", bgColor: Color(uiColor: .lightGray))
-//            }
             TagsView(label: "optional", bgColor: Color(uiColor: .lightGray), isUnwrappedOptional: false)
 
-//            if let typeString = node.wrapperTypeString {
-//                Text("@\(typeString)")
-//                    .font(.system(.callout))
-//                    .fontWeight(.semibold)
-//                    .foregroundColor(.red)
-//
-//            }
             PropertyWrapperLabel(node: node)
 
             HStack {

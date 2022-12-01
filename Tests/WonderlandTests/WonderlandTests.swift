@@ -1,11 +1,11 @@
 import XCTest
-@testable import Reflector
+@testable import Wonderland
 
-final class ReflectorTests: XCTestCase {
+final class WonderlandTests: XCTestCase {
     func testExample() throws {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        XCTAssertEqual(Reflector().text, "Hello, World!")
+        XCTAssertEqual(true, true)
     }
 }
